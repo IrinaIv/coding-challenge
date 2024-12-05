@@ -1,15 +1,19 @@
 import fastify from 'fastify';
 
-const server = fastify();
+import { Customers } from './customers/routes';
 
-server.get('/ping', async (request, reply) => {
-  return 'pong\n';
-});
+export const start = async () => {
+  const server = fastify({
+    logger: true,
+  });
 
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err);
+  try {
+    await server.register(Customers, { prefix: '/customers' });
+    await server.listen({ port: 3000 });
+  } catch (error) {
+    console.error(error);
     process.exit(1);
   }
-  console.log(`Server listening at ${address}`);
-});
+};
+
+start();
