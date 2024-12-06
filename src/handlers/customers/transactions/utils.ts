@@ -5,7 +5,7 @@ export const getAllCustomerTransactions = (allTransactions: Transaction[], custo
   return allTransactions.filter((transaction: Transaction) => transaction.customerId === customerId);
 };
 
-export const aggregateTransactions = (transactions: Transaction[]): TransactionResponse => {
+const aggregateTransactions = (transactions: Transaction[]): TransactionResponse => {
   const firstTransaction = transactions[0];
   const lastTransaction = transactions[transactions.length - 1];
   const deviceId = transactions.find((transaction: Transaction) => Boolean(transaction.metadata.deviceId))?.metadata?.deviceId;
