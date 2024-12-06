@@ -6,6 +6,7 @@ import {
   getSameDeviceTransactions,
   createRelatedCustomersResponse,
   retrieveRelatedTransactionData,
+  retrieveSameDeviceTransactionData,
 } from '../../handlers/customers/relatedCustomers/utils';
 import { RelatedCustomersRequest } from '../../handlers/customers/relatedCustomers/types';
 import { HTTPStatusCodes } from './constants';
@@ -27,12 +28,12 @@ export const getRelatedCustomers = async (
       throw new Error('No transactions found');
     }
     const p2pCustomerTransactions = getP2PCustomerTransactions(allTransactions, customerId);
-    const sameDevicesTransactions = getSameDeviceTransactions(allTransactions, customerId);
-    if (!p2pCustomerTransactions.length || !sameDevicesTransactions.length) {
+    const sameDeviceTransactions = getSameDeviceTransactions(allTransactions, customerId);
+    if (!p2pCustomerTransactions.length && !sameDeviceTransactions.length) {
       return reply.code(HTTPStatusCodes.OK).send({ relatedCustomers: [] });
     }
     const relatedTransactionData = retrieveRelatedTransactionData(p2pCustomerTransactions);
-    const sameDevicesTransactionData = retrieveRelatedTransactionData(sameDevicesTransactions);
+    const sameDevicesTransactionData = retrieveSameDeviceTransactionData(sameDeviceTransactions);
     const response = createRelatedCustomersResponse(allTransactions, relatedTransactionData, sameDevicesTransactionData);
     return reply.code(HTTPStatusCodes.OK).send(response);
   } catch (error) {
