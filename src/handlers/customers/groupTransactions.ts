@@ -7,7 +7,7 @@ export const groupTransactions = (transactions: Transaction[]): Map<string, Tran
     if (value) {
       transactionGroups.set(transaction.authorizationCode, [...value, transaction]);
     } else {
-      transactionGroups.set(transaction.authorizationCode, [transaction])
+      transactionGroups.set(transaction.authorizationCode, [transaction]);
     }
   }
   return transactionGroups;

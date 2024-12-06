@@ -1,4 +1,9 @@
-import { Transaction, TransactionResponse } from '../types';
+import { Transaction } from '../../types';
+import { TransactionResponse, CustomerTransactionsResponse } from './types';
+
+export const getAllCustomerTransactions = (allTransactions: Transaction[], customerId: number): Transaction[] => {
+  return allTransactions.filter((transaction: Transaction) => transaction.customerId === customerId);
+};
 
 export const aggregateTransactions = (transactions: Transaction[]): TransactionResponse => {
   const firstTransaction = transactions[0];
@@ -22,5 +27,21 @@ export const aggregateTransactions = (transactions: Transaction[]): TransactionR
       ...(deviceId ? { deviceId } : {})
     },
     timeline,
+  };
+};
+
+export const createGetTransactionsResponse = (groupedTransactions: Map<string, Transaction[]>): CustomerTransactionsResponse => {
+  const response = [];
+
+  for (const authorizationCode of groupedTransactions.keys()) {
+    const transactions = groupedTransactions.get(authorizationCode);
+    if (transactions?.length) {
+      const aggregatedTransactions = aggregateTransactions(transactions);
+      response.push(aggregatedTransactions);
+    }
+  }
+
+  return {
+    transactions: response,
   };
 };
