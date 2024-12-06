@@ -94,3 +94,4 @@ For a framework I was choosing between Fastify and Express. I had following requ
 **Next steps**
 * Add schemas for the endpoints to validate the routes and serialize the outputs
 * Extand test coverage. Currently, there are a few tests for several functions, but, as the next step, I would certainly add unit tests for all functions and both endpoints, covering possible edge cases
+* Add tools for a better dev experience. For example, nodemon and prettier
