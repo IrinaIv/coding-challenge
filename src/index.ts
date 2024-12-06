@@ -1,14 +1,8 @@
-import fastify from 'fastify';
-
-import { Customers } from './customers/routes';
+import { build } from './server';
 
 export const start = async () => {
-  const server = fastify({
-    logger: true,
-  });
-
   try {
-    await server.register(Customers, { prefix: '/customers' });
+    const server = await build();
     await server.listen({ port: 3000 });
   } catch (error) {
     console.error(error);
