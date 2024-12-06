@@ -9,5 +9,6 @@ export const fetchAllTransactions = async (): Promise<Transaction[] | undefined>
     return await response.json() as Transaction[];
   } catch (error) {
     console.error('Failed to fetch all transactions', error);
+    throw error;
   }
 }
